@@ -84,6 +84,10 @@ function App() {
     e.preventDefault();
 
     try {
+      if (!appointment.clientName || !appointment.clientPhone || !appointment.scheduleId || !appointment.hairStyleId) {
+        return toast.error("Todos os campos são obrigatórios")
+      }
+
       setLoading(true)
       await api.post(`/appointment`, appointment)
       setTimes(prev => prev.map(time => {
@@ -103,7 +107,7 @@ function App() {
 
   return (
     <>
-      <div className="w-full flex flex-col justify-center items-center px-4 mb-4">
+      <div className="w-full pb-4 flex flex-col justify-center items-center px-4 mb-4">
         <h3 className="text-xl font-bold mb-6 mt-4">Realizar Agendamento</h3>
 
         <form className="max-w-72 w-full flex flex-col gap-4" onSubmit={handleCreateAppointment}>
@@ -203,7 +207,7 @@ function App() {
           </Button>
         </form>
       </div>
-      <Toaster />
+      <Toaster position="top-center" />
     </>
   )
 }
